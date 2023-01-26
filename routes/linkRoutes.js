@@ -10,3 +10,4 @@ router
   .get("/:shortUrl", getShortLink)
 
 exports.linkRoutes = router;
+  

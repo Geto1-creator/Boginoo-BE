@@ -6,7 +6,7 @@ const app = express()
 const port = process.env.PORT
 const connect = require('./config/db')
 const { Link } = require('./models/linkModels')
-const { linkRoutes, userRoutes } = require('./routes')
+const { linkRoutes, userRoutes, categoryRoutes } = require('./routes')
 
 app.use(cors())
 app.use(express.json())
@@ -20,6 +20,7 @@ app.get('/', async (req, res) => {
 
 app.use(linkRoutes)
 app.use(userRoutes)
+app.use(categoryRoutes)
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`)

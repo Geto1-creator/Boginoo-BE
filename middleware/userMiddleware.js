@@ -19,6 +19,7 @@ const handleErrors = (err) => {
   return errors;
 };
 
+
 exports.isValidUser = async (req, res, next) => {
   const { email, password } = req.body;
   const isAlready = await User.findOne({ email: email });
@@ -35,6 +36,7 @@ exports.isValidUser = async (req, res, next) => {
     res.status(400).send({ errors });
   }
 };
+
 
 exports.checkUser = async (req, res, next) => {
   const { email, password } = req.body;
@@ -61,8 +63,6 @@ exports.checkUser = async (req, res, next) => {
 exports.authenticateToken = (req, res, next) => {
 
   const authHeader = req.body.headers.Authorization
-
-
   console.log(authHeader, "authenticateToken");
   const token = authHeader && authHeader.split(" ")[1];
   if (token == null) return res.sendStatus(401);
