@@ -21,7 +21,7 @@ const handleErrors = (err) => {
 
 
 exports.isValidUser = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body;n
   const isAlready = await User.findOne({ email: email });
   console.log(isAlready);
 

@@ -28,7 +28,7 @@ exports.loginUser = async (req, res) => {
       { expiresIn: "1d" }
     );
     res.json({ accessToken: accessToken });
-  } catch(err) {
+  } catch (err) {
     res.send(err);
   }
 };
@@ -40,7 +40,13 @@ exports.getAuthToken = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   const id = req.params.id;
-  const result = await User.findById({ _id: id }).populate("history");
+  const skip = req.query.skip;
+  const offSet = req.query.offSet || 5;
+  const result = await User.findById({ _id: id }).populate({
+    path: "history",
+    limit: 5,
+    skip: skip * offSet,
+  });
   res.send(result);
 };
 
@@ -53,4 +59,16 @@ exports.addLinkToUser = async (req, res) => {
   user.history.push(linkId);
   await user.save();
   res.send(user);
+};
+
+exports.countDatas = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findById({ _id: id });
+    const history = user.history.length;
+    console.log(history, "history");
+    res.send({ count: Math.ceil((history + 1) / 5) });
+  } catch (error) {
+    res.status(404).json(error);
+  }
 };

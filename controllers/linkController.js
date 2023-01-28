@@ -8,7 +8,7 @@ exports.createLink = async (req, res) => {
 };
 
 exports.getLinks = async (req, res) => {
-  const result = await Link.find({});
+  const result = await Link.find({}).limit(5)
 
   res.send(result); 
 };  
